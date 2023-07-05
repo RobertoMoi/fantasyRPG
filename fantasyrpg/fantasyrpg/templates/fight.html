@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/static/css/responsivefight.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Fight</title>
+</head>
+<body>
+    {% block nav %}{% include 'navbar.html' %}{% endblock nav %}
+    <div class="left">
+        <div class="container p-5 pt-2 pb-3 my-5 border border-2 rounded-3">
+            <h1><b>{{ username }}</b></h1>
+
+            <p>Il tuo EROE: <b>{{ user_hero }}</b></p>
+
+            <h2>Ecco le statistiche del tuo Eroe: </h2>
+            <p>SALUTE: {{ hero_life }}</p>
+            <p>ATTACCO: {{ hero_attack }}</p>
+            <p>DIFESA: {{ hero_defence }}</p>
+
+            <h3>Equipaggiamento: </h3>
+            <p><h5>{{ hero_equip}}</h5></p>
+            <p >RUOLO: {{ hero_equip_role }}</p>
+            <p >STATISTICA: {{hero_equip_stat}}</p>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="container p-5 pt-2 pb-3 mt-5 border border-2 rounded-3">
+
+            <form action="{% url 'fight' %}" method="post">
+                {% csrf_token %}
+
+                <b>{{ form.boss.label_tag }}</b>
+                    {% for choice in form.boss.field.queryset %}
+                        <div class="form-check my-2">
+                            <input id="id_{{form.boss.name}}_{{ forloop.counter0 }}" name="{{form.boss.name}}"
+                                  type="{{form.boss.field.widget.input_type}}" value="{{choice.id}}"
+                                  class="form-check-input">
+
+                            <label for="id_{{form.boss.name}}_{{ forloop.counter0 }}" class="form-check-label fs-5">
+                                {{ choice.name }} | {{ choice.place }} [ L:+{{ choice.life }} A:+{{ choice.attack }}
+                                D:+{{ choice.defence }} ]</label>
+
+                            {% for item in all_boss_equip %}
+                                {% if item.enemy.id == choice.id %}
+                                    {% ifchanged item.equip.name %}
+                                        <br><i>~ {{ item.equip.name }} </i>
+                                    {% endifchanged %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+
+                <button name="combatti" type="submit" class="btn my-2 btn-primary" value="sfida">Combatti</button>
+            </form>
+            {% for message in messages %}
+                {% ifequal message.tags 'no_battle error' %}
+                    <p  id="messages">{{ message }}</p>
+                {% endifequal %}
+		    {% endfor %}
+        </div>
+
+        {% if results is not None %}
+            <div class="p-5 pt-2 pb-3 border border-2 rounded-3">
+                {% if results == 'YOU WIN' %}
+                    <img class="img-fluid margin-image" src="/static/img/fight.gif" alt="fight">
+                {% else %}
+                    <img class="img-fluid margin-image" src="/static/img/fightSconfitta.gif" alt="fight">
+                {% endif %}
+
+                <h1><b>{{ results }}</b></h1>
+                <p>{{ boss_stats }}</p>
+                {% if results == 'YOU WIN' %}
+                    <p>Equipaggiamento droppato: <b>{{ boss_equip }}</b></p>
+                {% else %}
+                    <p>Equipaggiamento del boss: <b>{{ boss_equip }}</b></p>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

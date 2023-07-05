@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/static/css/responsive_gamedev_update_equip.css" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+</head>
+<body>
+    {% block nav %}{% include 'navbar_gamedev.html' %}{% endblock nav %}
+    <div class="left"></div>
+
+    <div class="main">
+        <div class="container p-5 pt-2 pb-3 my-5 border border-2 rounded-3">
+            <h3>MODIFICA: {{equip_chose}} </h3><br>
+
+            <img class="img-fluid margin-image" src="/static/img/modificaEquip.jpg" alt="logo">
+
+            <form action="{% url 'update_equipment' %}" method="POST">
+                {% csrf_token %}
+
+                {{ form.name }}
+                <br>
+                <b>{{ form.stat.label_tag}}</b>
+                    {{ form.stat }}
+                <br>
+                <b>{{ form.role.label_tag }}</b>
+                    {% for pk, choice in form.role.field.choices %}
+                        <div class="form-check mt-2">
+                            <input id="id_{{form.role.name}}_{{ forloop.counter0 }}" name="{{form.role.name}}"
+                                   type="{{form.role.field.widget.input_type}}" value="{{pk}}" class="form-check-input">
+
+                            <label for="id_{{form.role.name}}_{{ forloop.counter0 }}" class="form-check-label">
+                                {{ choice }}</label>
+                        </div>
+                    {% endfor %}
+                <br>
+                <div>
+                    {% if boss_without_equip %}
+                        <b>{{ form.add_boss.label_tag }}</b>
+                            {% for choice in form.add_boss.field.queryset %}
+                                {% if choice.id in boss_without_equip %}
+                                    {% ifchanged choice.name %}
+                                        <div class="form-check mt-2">
+                                            <input id="id_{{form.add_boss.name}}_{{ forloop.counter0 }}"
+                                                   name="{{form.add_boss.name}}"
+                                                   type="{{form.add_boss.field.widget.input_type}}"
+                                                   value="{{choice.id}}" class="form-check-input">
+
+                                            <label for="id_{{form.add_boss.name}}_{{ forloop.counter0 }}"
+                                                   class="form-check-label">{{ choice.name }}</label>
+                                        </div>
+                                    {% endifchanged %}
+                                {% endif %}
+                            {% endfor %}
+                    {% endif %}
+                </div>
+
+                <div>
+                    {% if form.remove_boss.field.queryset %}
+                        <b>{{ form.remove_boss.label_tag }}</b>
+                            {% for choice in form.remove_boss.field.queryset %}
+                                <div class="form-check mt-2">
+                                    <input id="id_{{form.remove_boss.name}}_{{ forloop.counter0 }}"
+                                           name="{{form.remove_boss.name}}"
+                                           type="{{form.remove_boss.field.widget.input_type}}" value="{{choice.id}}"
+                                           class="form-check-input">
+
+                                    <label for="id_{{form.remove_boss.name}}_{{ forloop.counter0 }}"
+                                           class="form-check-label">{{ choice.enemy.name }}</label>
+                                </div>
+                            {% endfor %}
+                    {% endif %}
+                </div>
+
+                <input type="button" name="Indietro" class="mt-3 btn btn-primary " onclick="location.href='../';"
+                       value="Indietro">
+
+                <button type="submit" class="mt-3 btn btn-primary button-position">Conferma modifiche</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="right"></div>
+</body>
+</html>

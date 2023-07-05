@@ -1,0 +1,36 @@
+* {
+  box-sizing: border-box;
+}
+
+.left {
+  float: left;
+  width: 50%; /* The width is 20%, by default */
+}
+
+.main {
+  float: left;
+  width: 50%; /* The width is 60%, by default */
+}
+
+/* Use a media query to add a breakpoint at 800px: */
+@media screen and (max-width: 800px) {
+  .left, .main  {
+    width: 100%; /* The width is 100%, when the viewport is 800px or smaller */
+  }
+}
+.messages{
+
+  color: green;
+  font-size: large;
+
+}
+
+.ml{
+
+  margin-right: 30%;
+
+}
+
+#text { text-transform: lowercase; }
+
+#text::first-letter { text-transform: uppercase; }

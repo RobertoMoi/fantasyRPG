@@ -1,0 +1,52 @@
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/static/css/responsivehome.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>User Home</title>
+</head>
+<body>
+    {% block nav %}{% include 'navbar.html' %}{% endblock nav %}
+
+    {% for message in messages %}
+        {% ifequal message.tags 'hero_created success' %}
+            <p class="messages">{{ message }}</p>
+        {% endifequal %}
+    {% endfor %}
+
+    <div class="left">
+        <div class="container p-5 pt-2 pb-3 my-5 border border-2 rounded-3">
+            <h1>Benvenuto: <b>{{ username }}</b></h1> <br>
+
+            <p>Il tuo EROE: <b>{{ user_hero }}</b></p>
+
+             <img class="img-fluid margin-image" src="/static/img/eroe.png" alt="eroe">
+        </div>
+    </div>
+
+    <div class="main" >
+        <div class="container p-5 pt-2 pb-3 my-5 border border-2 rounded-3">
+            <h1>Ecco le statistiche del tuo Eroe: </h1><br>
+
+            <p><b>SALUTE: {{ hero_life }}</b></p><br>
+            <p><b>ATTACCO: {{ hero_attack }}</b></p><br>
+            <p><b>DIFESA: {{ hero_defence }}</b></p><br>
+        </div>
+    </div>
+
+    <div class="right">
+        <div class="container p-5 pt-2 pb-3 my-5 border border-2 rounded-3">
+            <h1>Equipaggiamento:</h1><br>
+            <p><b>{{ hero_equip}}</b></p><br>
+            <p>RUOLO: <b>{{ hero_equip_role }}</b></p>
+            <p>STATISTICA: <b>{{hero_equip_stat}}</b></p><br>
+
+            {% for message in messages %}
+                {% ifequal message.tags 'equip_changed success' %}
+                    <p class="messages">{{ message }}</p>
+                {% endifequal %}
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

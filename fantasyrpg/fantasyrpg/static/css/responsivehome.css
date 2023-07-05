@@ -1,0 +1,43 @@
+* {
+  box-sizing: border-box;
+}
+
+.left {
+  float: left;
+  width: 25%; /* The width is 20%, by default */
+
+}
+
+.right {
+  float: left;
+  width: 30%; /* The width is 20%, by default */
+
+}
+
+.main {
+  float: left;
+  width: 45%; /* The width is 60%, by default */
+}
+
+/* Use a media query to add a breakpoint at 800px: */
+@media screen and (max-width: 800px) {
+  .left, .main, .right {
+    width: 100%; /* The width is 100%, when the viewport is 800px or smaller */
+  }
+}
+
+.t3{
+
+ font-size: 50% ;
+
+
+}
+
+.messages{
+
+  color: green;
+  font-size: large;
+
+}
+
+

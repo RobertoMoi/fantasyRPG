@@ -1,0 +1,31 @@
+* {
+  box-sizing: border-box;
+}
+
+.left, .right {
+  float: left;
+  padding: 20px;
+  width: 35%; /* The width is 20%, by default */
+
+}
+
+.main {
+  float: left;
+  padding-top: 1%;
+  width: 30%; /* The width is 60%, by default */
+}
+
+/* Use a media query to add a breakpoint at 800px: */
+@media screen and (max-width: 800px) {
+  .left, .main, .right {
+    width: 100%; /* The width is 100%, when the viewport is 800px or smaller */
+  }
+}
+
+.margin-image {
+  margin-bottom: 7%;
+}
+
+.button-position{
+  margin-left:74%;
+}

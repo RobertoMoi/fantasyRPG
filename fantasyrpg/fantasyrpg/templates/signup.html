@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/static/css/responsivesignup.css" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+</head>
+<body>
+    <div class="left"></div>
+
+    <div class="main">
+        <div class="container p-5 my-5 border border-2 rounded-3">
+            <img class="img-fluid margin-image" src="/static/img/logofantasy.jpg" alt="logo">
+
+            <div class="container mt-3">
+                <form action="/signup/" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3 mt-3">
+                        {{ form.first_name }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.last_name }}
+                    </div>
+                    <div class="mb-3 ">
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <div class="text-danger">
+                                {{ form.username.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.password }}
+                        {% if form.password.errors %}
+                            <div class="text-danger">
+                                {{ form.password.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3 ">
+                        {{ form.pass_confirm }}
+                        {% if form.pass_confirm.errors %}
+                            <div class="text-danger">
+                                {{ form.pass_confirm.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.user_type.label_tag }}
+                            {% for pk, choice in form.user_type.field.choices %}
+                                <div class="form-check mt-2">
+                                    <input id="id_{{form.user_type.name}}_{{ forloop.counter0 }}"
+                                           name="{{form.user_type.name}}"
+                                           type="{{form.user_type.field.widget.input_type}}" value="{{pk}}"
+                                           class="form-check-input">
+
+                                    <label for="id_{{form.user_type.name}}_{{ forloop.counter0 }}"
+                                           class="form-check-label">{{ choice }}</label>
+                                </div>
+                            {% endfor %}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary button-position">Sign Up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="right"></div>
+</body>
+</html>
