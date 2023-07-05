@@ -6,7 +6,7 @@ creare un'utenza game dev tramite la pagina di iscrizione al portale.
 Per avviare l'applicazione:
 1) Installare django 2.2:
 ```pip install django==2.2```
-1) Spostarsi sulla directory fantasyrpg/fantasyrpg
+1) Spostarsi sulla directory fantasyrpg/fantasyrpg:
 ```cd fantasyrpg```
 2) Avviare il server locale:
 ```python manage.py runserver```
